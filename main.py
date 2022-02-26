@@ -33,7 +33,6 @@ while True:
     conn.send(np_bytes)
     conn.send(b"tail")
 
-    print("new")
     message = conn.recv(8).decode()
     print(message)
     if message[0] == "g":
