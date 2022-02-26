@@ -3,7 +3,8 @@ from picamera2 import *
 from null_preview import *
 
 cam = Picamera2()
-config = cam.still_configuration()
+
+config = cam.preview_configuration(main={"size": (640, 480)})
 cam.configure(config)
 
 preview = NullPreview(cam)
@@ -18,9 +19,10 @@ conn.send("Hi".encode())
 
 cam.start()
 
-np_array = cam.capture_array().tobytes()
+np_array = cam.capture_array()
+np_bytes = np_array.tobytes()
 print(len(np_array))
 
-#sock.send(np_array)
+sock.send(np_bytes)
 sock.close()
 cam.stop()
