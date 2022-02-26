@@ -20,5 +20,5 @@ class gesture_response:
             time.sleep(1)
             print(str(i))
         # capture_image(insert image capture function)       
-        self.cam.capture_file("test.jpeg")
+        self.cam.capture_file("../picture.jpeg")
         self.busy_state = False
