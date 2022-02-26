@@ -8,7 +8,7 @@ from mediapipe.python.solutions import drawing_utils, hands
 # load the models
 gesture_model = load('./model/gesture_model.pkl')
 hand_model = hands.Hands(static_image_mode=True, 
-    min_detection_confidence=0.7, 
+    min_detection_confidence=0.85, 
     min_tracking_confidence=0.7, max_num_hands=1)
 txt_offset = (-60, 30)
 

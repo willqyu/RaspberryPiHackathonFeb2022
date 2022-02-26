@@ -2,7 +2,10 @@ import socket
 from picamera2 import *
 from null_preview import *
 
+from gesture_recognition import gesture_response
+
 cam = Picamera2()
+gesture_object = gesture_response(cam)
 
 config = cam.preview_configuration(main={"size": (640, 480), "format": "BGR888"})
 cam.configure(config)
@@ -33,7 +36,8 @@ while True:
     message = conn.recv(8).decode()
 
     if message[0] == "g":
-        print(message[1])
+        gesture_object.gesture_action(message[1])
+
 
 sock.close()
 cam.stop()
