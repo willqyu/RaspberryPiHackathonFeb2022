@@ -34,7 +34,7 @@ while True:
     conn.send(b"tail")
 
     message = conn.recv(8).decode()
-
+    print(message)
     if message[0] == "g":
         gesture_object.gesture_action(message[1])
 
