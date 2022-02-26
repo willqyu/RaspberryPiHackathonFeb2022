@@ -3,7 +3,7 @@ import cv2
 import time
 import numpy as np
     
-def process_hand(image, hand_model):
+def process_hand(image, hand_model, gesture_model):
     # pass video into network
     resolution = (640, 480)
     results = hand_model.process(image)
@@ -29,9 +29,4 @@ def process_hand(image, hand_model):
             gesture = pred.argmax(axis=1)[0]
             confidence = pred.max()
 
-            # add text
-            cv2.putText(image, "'{}',{:.1%}".format(gesture, confidence), 
-            txt_pos.astype(int), cv2.FONT_HERSHEY_DUPLEX,  1, 
-            (0, 255, 255), 1, cv2.LINE_AA)
-
-    return gesture, confidence, image
+    return gesture, confidence

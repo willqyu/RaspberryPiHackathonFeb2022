@@ -6,7 +6,7 @@ import cv2
 from joblib import load
 from mediapipe.python.solutions import drawing_utils, hands
 
-from data_handling import load_model, process_hand
+from data_handling import process_hand
 
 # load the models
 gesture_model = load('./model/gesture_model.pkl')
@@ -16,8 +16,6 @@ hand_model = hands.Hands(static_image_mode=True,
 
 HOST = '192.168.137.71'    # The remote host
 PORT = 42069              # The same port as used by the server
-
-            
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
@@ -34,17 +32,18 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 incoming += message[4:]
             elif message[-4:] == b"tail":
                 incoming += message[:-4]
-                
                 decoded_image = np.frombuffer(incoming, dtype = 'uint8').reshape((480, 640, 3))
                 rgb_image = cv2.cvtColor(decoded_image, cv2.COLOR_BGR2RGB)
-                cv2.imshow("Camera", rgb_image)
-                cv2.waitKey(1)
-                gesture, confidence = process_hand(decoded_image, hand_model)
+                #cv2.imshow("Gesture Recognition", rgb_image)
+                cv2.waitKey(3)
+                print("before process!")
+                gesture, confidence = process_hand(decoded_image, hand_model, gesture_model)
                 if confidence:
                     print(gesture)
                     return_message = "g" + str(gesture)
                     s.send(return_message.encode())
-                
+                print("after!")
+
             else:
                 incoming+=message
             
