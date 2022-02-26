@@ -75,9 +75,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 gesture, confidence = process_hand(decoded_image)
                 if confidence:
                     print(gesture)
-                #time.sleep(0.01)
-                return_message = "g" + str(gesture)
-                s.send(return_message.encode())
+                    return_message = "g" + str(gesture)
+                    s.send(return_message.encode())
+                
             else:
                 incoming+=message
             
