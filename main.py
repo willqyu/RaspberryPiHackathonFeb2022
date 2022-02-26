@@ -1,4 +1,4 @@
-import socket, math
+import socket
 from picamera2 import *
 from null_preview import *
 
@@ -24,10 +24,7 @@ np_bytes = np_array.tobytes()
 print(len(np_bytes))
 
 conn.send(b"head")
-print("head")
-packets = math.ceillen(np_bytes) / 1024 
 conn.send(np_bytes)
-print("tail")
 conn.send(b"tail")
 
 sock.close()
