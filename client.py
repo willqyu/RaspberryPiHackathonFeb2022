@@ -20,7 +20,7 @@ def process_hand(image):
     # pass video into network
     resolution = (640, 480)
     results = hand_model.process(image)
-    gesture, confidence = 0, 0
+    gesture, confidence = -1, 0
     # process results
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:

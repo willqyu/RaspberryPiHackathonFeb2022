@@ -9,7 +9,7 @@ class gesture_response:
     # processes gesture and confidence level
     def gesture_action(self, gesture):
         self.gesture = gesture
-        if not self.busy_state and int(self.gesture) == 0:
+        if not self.busy_state and int(self.gesture) == 1:
             self.delay_capture()
 
     # function for delaying image capture
