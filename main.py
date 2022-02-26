@@ -4,7 +4,7 @@ from null_preview import *
 
 cam = Picamera2()
 
-config = cam.preview_configuration(main={"size": (640, 480)})
+config = cam.preview_configuration(main={"size": (640, 480), "format": "BGR888"})
 cam.configure(config)
 
 preview = NullPreview(cam)

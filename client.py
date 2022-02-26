@@ -67,9 +67,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             elif message[-4:] == b"tail":
                 print("tail")
                 incoming += message[:-4]
-                decoded = np.frombuffer(incoming, dtype = 'uint8').reshape((480, 640, 4))
-                print("frame", frame_count)
+                decoded_image = np.frombuffer(incoming, dtype = 'uint8').reshape((480, 640, 4))
+                print(image_without_alpha)
+                process_hand(image_without_alpha)
                 frame_count += 1
+                print("frame", frame_count)
             else:
                 incoming+=message
             
