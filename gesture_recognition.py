@@ -1,22 +1,19 @@
+import time
 class gesture_response:
-    def __init__(self, confidence, gesture, video_state, cam):
+    def __init__(self, confidence, gesture, busy_state, cam):
         self.confidence = confidence
         self.gesture = gesture
-        self.video_state = video_state
+        self.busy_state = busy_state
         self.cam = cam
-
+    
+    # processes gesture and confidence level
     def gesture_action(self):
-        if not self.video_state and self.confidence >= 85:
-            if self.gesture == 0:
-                self.cam.capture_picture()
-            elif self.gesture == 1:
-                self.cam.capture_video_start()
-            else:
-                pass
-        elif self.video_state and self.confidence >= 85:
-            if self.gesture == 2:
-                self.cam.capture_video_stop()
-            else:
-                pass
+        if not self.busy_state and self.confidence >= 85:
+                self.cam.delay_capture(self.gesture)
         else:
             pass
+    # function for delaying image capture
+    def delay_capture(self):
+        self.busy_state = True
+        time.sleep(int(self.gesture))
+        # capture_image(insert image capture function)       
