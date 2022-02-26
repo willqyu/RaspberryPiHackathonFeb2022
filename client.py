@@ -20,7 +20,7 @@ def process_hand(image):
     # pass video into network
     resolution = (640, 480)
     results = hand_model.process(image)
-
+    gesture, confidence = 0, 0
     # process results
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
@@ -46,8 +46,9 @@ def process_hand(image):
             cv2.putText(image, "'{}',{:.1%}".format(gesture, confidence), 
             txt_pos.astype(int), cv2.FONT_HERSHEY_DUPLEX,  1, 
             (0, 255, 255), 1, cv2.LINE_AA)
-            print(gesture, confidence)
-            return gesture, confidence
+
+    return gesture, confidence
+            
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
@@ -61,17 +62,22 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.close()
                 break
             elif message[:4] == b"head":
-                print("head")
                 incoming = b''
                 incoming += message[4:]
             elif message[-4:] == b"tail":
-                print("tail")
                 incoming += message[:-4]
                 frame_count += 1
-                print("frame", frame_count)
+                #print("frame", frame_count)
                 decoded_image = np.frombuffer(incoming, dtype = 'uint8').reshape((480, 640, 3))
-                process_hand(decoded_image)
-                s.send("Received".encode())
+                rgb_image = cv2.cvtColor(decoded_image, cv2.COLOR_BGR2RGB)
+                cv2.imshow("Camera", rgb_image)
+                cv2.waitKey(3)
+                gesture, confidence = process_hand(decoded_image)
+                if confidence:
+                    print(gesture)
+                #time.sleep(0.01)
+                return_message = "g" + str(gesture)
+                s.send(return_message.encode())
             else:
                 incoming+=message
             
