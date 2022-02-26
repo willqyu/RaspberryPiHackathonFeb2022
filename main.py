@@ -14,12 +14,13 @@ sock.bind(("", 42069))
 sock.listen()
 
 conn, addr = sock.accept()
+conn.send("Hi".encode())
 
 cam.start()
 
 np_array = cam.capture_array().tobytes()
 print(len(np_array))
+
 #sock.send(np_array)
-conn.send("Hi".encode())
-cam.stop()
 sock.close()
+cam.stop()
