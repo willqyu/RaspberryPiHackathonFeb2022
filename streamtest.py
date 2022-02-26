@@ -24,12 +24,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
         conn, addr = sock.accept()
         stream = conn.makefile("wb")
-        picam2.encoder.output = stream
-        time.sleep(20)
-        picam2.stop()
-        picam2.stop_encoder()
-        conn.close()
+        picam.encoder.output = stream
+        while True:
+            time.sleep(1)
+        
         
     except KeyboardInterrupt:
-        sock.close()
-        exit()
+        picam.stop()
+        picam.stop_encoder()
+        conn.close()
