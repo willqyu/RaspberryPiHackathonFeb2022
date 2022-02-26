@@ -8,17 +8,18 @@ cam.configure(config)
 
 preview = NullPreview(cam)
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-    sock.bind(("", 42069))
-    sock.listen()
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM):
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+sock.bind(("", 42069))
+sock.listen()
 
-    conn, addr = sock.accept()
+conn, addr = sock.accept()
 
-    cam.start()
+cam.start()
 
-    np_array = cam.capture_array().tobytes()
-    print(len(np_array))
-    #sock.send(np_array)
-    sock.send("Hi".encode())
-    cam.stop()
-    conn.close()
+np_array = cam.capture_array().tobytes()
+print(len(np_array))
+#sock.send(np_array)
+sock.send("Hi".encode())
+cam.stop()
+conn.close()
