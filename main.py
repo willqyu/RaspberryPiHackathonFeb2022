@@ -1,4 +1,5 @@
 import socket
+import time
 from picamera2 import *
 from null_preview import *
 
