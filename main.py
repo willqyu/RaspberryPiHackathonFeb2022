@@ -1,4 +1,4 @@
-import socket
+import socket, math
 from picamera2 import *
 from null_preview import *
 
@@ -25,6 +25,7 @@ print(len(np_bytes))
 
 conn.send(b"head")
 print("head")
+packets = math.ceillen(np_bytes) / 1024 
 conn.send(np_bytes)
 print("tail")
 conn.send(b"tail")
