@@ -22,7 +22,7 @@ cam.start()
 np_array = cam.capture_array()
 np_bytes = np_array.tobytes()
 print(len(np_bytes))
-print(np_bytes.shape)
+print(np_array.shape)
 
 conn.send(b"head")
 conn.send(np_bytes)
