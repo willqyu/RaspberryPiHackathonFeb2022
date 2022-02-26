@@ -1,4 +1,8 @@
+from curses import raw
 from picamera2 import *
 
-picam2 = Picamera2()
+cam = Picamera2()
 
+raw_np_array = cam.capture_array("raw")
+
+print(raw_np_array)
