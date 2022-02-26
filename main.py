@@ -1,5 +1,6 @@
 from curses import raw
 from picamera2 import *
+from null_preview import *
 
 cam = Picamera2()
 cam.configure(cam.still_configuration())
