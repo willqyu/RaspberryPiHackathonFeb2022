@@ -23,6 +23,6 @@ np_array = cam.capture_array()
 np_bytes = np_array.tobytes()
 print(len(np_array))
 
-sock.send(np_bytes)
+conn.send(np_bytes)
 sock.close()
 cam.stop()
