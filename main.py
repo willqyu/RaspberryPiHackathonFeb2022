@@ -20,6 +20,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     np_array = cam.capture_array().tobytes()
     print(len(np_array))
     #sock.send(np_array)
-    sock.send("Hi".encode)
+    sock.send("Hi".encode())
     cam.stop()
     conn.close()
