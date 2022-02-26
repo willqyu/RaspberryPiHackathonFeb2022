@@ -17,8 +17,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
     cam.start()
 
-    stream = conn.makefile("wb")
     np_array = cam.capture_array().tobytes()
-    stream.write(np_array)
+    print(len(np_array))
+    sock.send(np_array)
     cam.stop()
     conn.close()
