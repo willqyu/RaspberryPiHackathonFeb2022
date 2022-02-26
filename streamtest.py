@@ -4,7 +4,6 @@ from null_preview import *
 import socket
 import os
 import time
-import keyboard 
 
 # init camera
 picam = Picamera2()
@@ -14,17 +13,18 @@ preview = NullPreview(picam)
 encoder = H264Encoder(1000000)
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind(("0.0.0.0", 10001))
-    sock.listen()
+    try:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        sock.bind(("", 10001))
+        sock.listen()
 
-    picam.encoder = encoder
-    picam.start_encoder()
-    picam.start()
+        picam.encoder = encoder
+        picam.start_encoder()
+        picam.start()
 
-    conn, addr = sock.accept()
-    stream = conn.makefile("wb")
-    picam.encoder.output = stream
-
-if keyboard.is_pressed("q"):
-    exit()
+        conn, addr = sock.accept()
+        stream = conn.makefile("wb")
+        picam.encoder.output = stream
+    except KeyboardInterrupt:
+        sock.close()
+        exit()
